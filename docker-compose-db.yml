@@ -1,0 +1,29 @@
+version: '3.6'
+
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: test
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - 5432:5432
+    volumes:
+      - /home/visual/db_data:/var/lib/postgresql/data
+
+  pgAdmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: user@domain.local
+      PGADMIN_DEFAULT_PASSWORD: test
+    ports:
+      - 8090:80
+    volumes:
+      - /home/visual/pgadmin_data:/var/lib/pgadmin
+
+#  hired-ui:
+#    image: xclusivevivek/hired-ui:latest
+#    ports:
+#      - 80:80
+
