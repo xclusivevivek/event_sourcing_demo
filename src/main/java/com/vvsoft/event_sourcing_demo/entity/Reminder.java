@@ -24,7 +24,7 @@ public class Reminder implements ReminderEventHandler {
         title = event.title();
         scheduledAt = event.scheduledAt();
         status = ReminderStatus.SCHEDULED;
-        id = UUID.randomUUID().toString();
+        id = event.id();
     }
 
     public void applyEvent(RescheduleReminderEvent event){

@@ -35,7 +35,7 @@ public class EventRepository<T extends Event> {
         this.objectMapper.findAndRegisterModules();
     }
 
-    public void save(T event, String streamId, String eventName, int version) {
+    public EventWrapper<T> save(T event, String streamId, String eventName, int version) {
         EventWrapper<T> wrappedEvent = wrapEvent(event,streamId,version);
         String insertEventQuery = "insert into events(\"id\",\"type\",stream_id,\"version\",event_received,event_occurred,\"data\") values (?,?,?,?,?,?,?)";
         try {
@@ -47,7 +47,7 @@ public class EventRepository<T extends Event> {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-
+        return wrappedEvent;
     }
 
     public List<EventWrapper<T>> read(String streamId) {

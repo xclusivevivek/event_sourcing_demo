@@ -19,7 +19,7 @@ public sealed interface ReminderEvent extends Event{
 
     List<Event> acceptHandler(ReminderEventHandler handler);
 
-    public record AddReminderEvent(String title, LocalDateTime scheduledAt) implements ReminderEvent {
+    public record AddReminderEvent(String id,String title, LocalDateTime scheduledAt) implements ReminderEvent {
         @Override
         public List<Event> acceptHandler(ReminderEventHandler handler) {
             return handler.handleEvent(this);
