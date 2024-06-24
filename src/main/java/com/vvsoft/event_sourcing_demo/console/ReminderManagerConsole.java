@@ -1,18 +1,14 @@
 package com.vvsoft.event_sourcing_demo.console;
 
 import com.vvsoft.event_sourcing_demo.entity.Reminder;
-import com.vvsoft.event_sourcing_demo.entity.repo.ReminderRepo;
 import com.vvsoft.event_sourcing_demo.service.ReminderService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.shell.command.annotation.Command;
 import org.springframework.shell.command.annotation.Option;
-import org.springframework.shell.standard.ShellComponent;
-import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAccessor;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Command
 public class ReminderManagerConsole{
@@ -42,5 +38,11 @@ public class ReminderManagerConsole{
     public String rescheduleReminder(@Option(longNames = "id",shortNames = 'i') String id,@Option(longNames = "schedule",shortNames = 's') String scheduledAt) throws Exception {
         Reminder reminder = reminderService.rescheduleReminder(id,LocalDateTime.parse(scheduledAt,timeFormatter));
         return String.format("Reminder Rescheduled : %s",reminder);
+    }
+
+    @Command(command = "show_reminder", alias = "show")
+    public String showReminder() throws Exception {
+        List<Reminder> reminders = reminderService.getAll();
+        return reminders.stream().map(Reminder::toString).collect(Collectors.joining("\n***\n"));
     }
 }

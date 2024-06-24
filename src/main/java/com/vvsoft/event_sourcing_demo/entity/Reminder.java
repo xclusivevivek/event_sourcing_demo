@@ -2,13 +2,18 @@ package com.vvsoft.event_sourcing_demo.entity;
 
 import com.vvsoft.event_sourcing_demo.event.Event;
 import static com.vvsoft.event_sourcing_demo.event.reminder.ReminderEvent.*;
-import lombok.Data;
+
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
+import java.util.concurrent.Flow;
+import java.util.function.Function;
+import java.util.function.UnaryOperator;
 
-@Data
+@Getter
+@Setter
 public class Reminder implements ReminderEventHandler {
     private String id;
     private String title;
@@ -62,5 +67,19 @@ public class Reminder implements ReminderEventHandler {
     public List<Event> handleEvent(CancelReminderEvent event) {
         applyEvent(event);
         return List.of();
+    }
+
+    @Override
+    public String toString() {
+        UnaryOperator<String> resize = input -> String.format("%-15s", input);
+        return  String.format("%s:%s\n%s:%s\n%s:%s\n%s:%s",
+                resize.apply("Id"),
+                this.getId(),
+                resize.apply("Title"),
+                this.getTitle(),
+                resize.apply("ScheduledAt"),
+                this.getScheduledAt(),
+                resize.apply("Status"),
+                this.getStatus());
     }
 }

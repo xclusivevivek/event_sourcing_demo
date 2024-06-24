@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -36,6 +37,15 @@ public class ReminderRepo {
             reminderEvent.acceptHandler(reminder);
         } );
         return reminder;
+    }
+
+    public List<Reminder> findAll(){
+        List<Reminder> reminders = new ArrayList<>();
+        List<String> streamId = eventRepo.getAllStreams();
+        streamId.forEach( id -> {
+            reminders.add(findReminder(id));
+        });
+        return reminders;
     }
 
 }

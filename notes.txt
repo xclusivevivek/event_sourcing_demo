@@ -10,8 +10,10 @@ CREATE TABLE events.events (
 );
 
 commands :
-addrem -i "myReminder" -t "this is awesome" -s 20241211090909
+addrem -i "gentle_reminder" -t "Wake Up SId" -s 20241211090909
 reschedulerem -i "myReminder" -s 20251211091009
 cancelrem -i myReminder
+
+
 
 

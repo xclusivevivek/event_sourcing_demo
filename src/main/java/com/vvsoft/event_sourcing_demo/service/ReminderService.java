@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class ReminderService {
@@ -20,7 +19,9 @@ public class ReminderService {
     private final ReminderRepo repo;
     private ApplicationEventPublisher eventPublisher;
 
-    public ReminderService(EventRepository<ReminderEvent> eventRepo, ReminderRepo repo, ApplicationEventPublisher applicationEventPublisher) {
+    public ReminderService(EventRepository<ReminderEvent> eventRepo,
+                           ReminderRepo repo,
+                           ApplicationEventPublisher applicationEventPublisher) {
         this.eventRepo = eventRepo;
         this.repo = repo;
         this.eventPublisher = applicationEventPublisher;
@@ -62,5 +63,9 @@ public class ReminderService {
             eventPublisher.publishEvent(event);
         }
         return reminder;
+    }
+
+    public List<Reminder> getAll(){
+        return  repo.findAll();
     }
 }

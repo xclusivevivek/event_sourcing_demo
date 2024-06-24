@@ -79,4 +79,9 @@ public class EventRepository<T extends Event> {
         wrappedEvent.setCreatedAt(LocalDateTime.now());
         return wrappedEvent;
     }
+
+    public List<String> getAllStreams() {
+        String readQuery = "select distinct stream_id from events.events";
+        return jdbcTemplate.query(readQuery, (rs, rowNum) -> rs.getString(1));
+    }
 }
